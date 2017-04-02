@@ -2,20 +2,44 @@ from django.db import models
 from django.utils import timezone
 
 
-class Question(models.Model):
-    question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
-    def __str__(self):
-        return self.question_text
-    def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+class User(models.Model):
+	first_name = models.CharField(max_length=30)
+	last_name = models.CharField(max_length=30)
+	email = models.CharField(max_length=40)
+	password = models.CharField(max_length=30)
+	pseudo = models.CharField(max_length=30)
+	role = models.CharField(max_length=30)
+
+	def __str__(self):
+		return self.last_name
 
 
-class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
-    def __str__(self):
-        return self.choice_text
+class Categories(models.Model):
+	name = models.CharField(max_length=30)
+	def __str__(self):
+		return self.name
+
+class Artistes(models.Model):
+	name = models.CharField(max_length=30)
+	pictures=models.ImageField(upload_to='artistes/')
+	def __str__(self):
+		return self.name
+
+class Spectacles(models.Model):
+	name = models.CharField(max_length=30)
+	place =models.CharField(max_length=100)
+	date = models.DateField(null='True', blank='True')
+	price = models.IntegerField()
+	pictures=models.CharField(max_length=100,default="")
+	artistes= models.ManyToManyField(Artistes,blank='true')
+	categories = models.ForeignKey(Categories, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.name
+
+
+
+
+
 
 # Create your models here.
