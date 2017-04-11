@@ -21,15 +21,17 @@ class Categories(models.Model):
 
 class Artistes(models.Model):
 	name = models.CharField(max_length=30)
-	pictures=models.ImageField(upload_to='artistes/')
+	pictures=models.ImageField(upload_to='artistes/', null='True', blank='True')
 	def __str__(self):
 		return self.name
 
 class Spectacles(models.Model):
-	name = models.CharField(max_length=30)
+	name = models.CharField(max_length=255)
 	place =models.CharField(max_length=100)
-	date = models.DateField(null='True', blank='True')
+	beginningdate = models.DateField(null='True', blank='True')
+	endingdate = models.DateField(null='True', blank='True')	
 	price = models.IntegerField()
+	description = models.CharField(max_length=255, default="")
 	pictures=models.CharField(max_length=100,default="")
 	artistes= models.ManyToManyField(Artistes,blank='true')
 	categories = models.ForeignKey(Categories, on_delete=models.CASCADE)

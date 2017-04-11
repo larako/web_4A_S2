@@ -116,8 +116,9 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     <div class="w3-col l3 s6">
       <div class="w3-container">
       {% load  static %}
-       <img src="{% static spectacle.pictures%}" width=200 height=200>
-        <p>{{ spectacle.name }} <br><b>{{spectacle.price}}$</b></p>
+       <img src="{% static spectacle.pictures%}" width=150 height=225>
+        <p>{{ spectacle.name }}<br><i>{{ spectacle.artistes.all|join:", "}}</i> 
+	<br><b>{{spectacle.price}}$</b> </p>
       </div>
     </div>
     {% endfor %}
