@@ -21,45 +21,40 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   </div>
   <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
  
+  <a  href="/accueil" class="w3-button w3-block w3-light-grey w3-left-align"> Accueil  </a>
+
     <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-light-grey w3-left-align" id="myBtn">
       Spectacles <i class="fa fa-caret-down"></i>
     </a>
     <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-      <a href="#" class="w3-bar-item w3-button ><i class="fa fa-caret-right w3-margin-right"></i>Humor</a>
-      <a href="#" class="w3-bar-item w3-button">Theater</a>
-      <a href="#" class="w3-bar-item w3-button">Danse</a>
+      <a href="Spectacles_Humor" class="w3-bar-item w3-button ><i class="fa fa-caret-right w3-margin-right"></i>Humor</a>
+      <a href="/Spectacles_Theater" class="w3-bar-item w3-button">Theater</a>
+      <a href="/Spectacles_Danse" class="w3-bar-item w3-button">Danse</a>
     </div>
         <a onclick="myAccFunc1()" href="javascript:void(0)" class="w3-button w3-block w3-light-grey w3-left-align" id="myBtn">
       Festivals <i class="fa fa-caret-down"></i>
     </a>
     <div id="demoAcc1" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-      <a href="#" class="w3-bar-item w3-button "></i>Rock</a>
-      <a href="#" class="w3-bar-item w3-button">Electro</a>
-      <a href="#" class="w3-bar-item w3-button">Hip-hop</a>
+      <a href="/Festivals_Rock" class="w3-bar-item w3-button "></i>Rock</a>
+      <a href="/Festivals_Electro" class="w3-bar-item w3-button">Electro</a>
+      <a href="/Festivals_HipHop" class="w3-bar-item w3-button">Hip-hop</a>
     </div>
         <a onclick="myAccFunc2()" href="javascript:void(0)" class="w3-button w3-block w3-light-grey w3-left-align" id="myBtn">
       Concerts <i class="fa fa-caret-down"></i>
     </a>
     <div id="demoAcc2" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-      <a href="#" class="w3-bar-item w3-button "></i>Rock</a>
-      <a href="#" class="w3-bar-item w3-button">Electro</a>
-      <a href="#" class="w3-bar-item w3-button">Rap/Hip-Hop</a>
+      <a href="/Concerts_Rock" class="w3-bar-item w3-button "></i>Rock</a>
+      <a href="/Concerts_Electro" class="w3-bar-item w3-button">Electro</a>
+      <a href="/Concerts_HipHop" class="w3-bar-item w3-button">Rap/Hip-Hop</a>
     </div>
         <a onclick="myAccFunc3()" href="javascript:void(0)" class="w3-button w3-block w3-light-grey w3-left-align" id="myBtn">
       Expo <i class="fa fa-caret-down"></i>
     </a>
     <div id="demoAcc3" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-      <a href="#" class="w3-bar-item w3-button "></i>Museum</a>
-      <a href="#" class="w3-bar-item w3-button">Expo</a>
-      <a href="#" class="w3-bar-item w3-button">Grand Palais</a>
+      <a href="/Expo_Museum" class="w3-bar-item w3-button "></i>Museum</a>
+      <a href="/Expo_Expo" class="w3-bar-item w3-button">Expo</a>
+      <a href="/ExpoGrandPalais" class="w3-bar-item w3-button">Grand Palais</a>
     </div>
-        <a onclick="myAccFunc4()" href="javascript:void(0)" class="w3-button w3-block w3-light-grey w3-left-align" id="myBtn">
-      Leisures <i class="fa fa-caret-down"></i>
-    </a>
-    <div id="demoAcc4" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-      <a href="#" class="w3-bar-item w3-button "></i>Parcs</a>
-      <a href="#" class="w3-bar-item w3-button">Salons</a>
-      <a href="#" class="w3-bar-item w3-button">Cinemas</a>
     </div>
 
 
@@ -87,7 +82,8 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   
   <!-- Top header -->
   <header class="w3-container w3-xlarge">
-    <p class="w3-left">Humor Spectacles</p>
+
+    <p class="w3-left"></p>
     <p class="w3-padding w3-display-topmiddle">
      
        <input class="w3-input w3-border w3-animate-inpu w3-small" type="text"  placeholder="Search.." style="width:70%">
@@ -116,9 +112,8 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     <div class="w3-col l3 s6">
       <div class="w3-container">
       {% load  static %}
-       <img src="{% static spectacle.pictures%}" width=150 height=225>
-        <p>{{ spectacle.name }}<br><i>{{ spectacle.artistes.all|join:", "}}</i> 
-	<br><b>{{spectacle.price}}$</b> </p>
+       <a href="{% url spectacle.categories|slugify spectacle.id %}"> <img  src="{% static spectacle.pictures%}" width=150 height=225 ></a>
+        <p>{{ spectacle.name }}<br> <b>{{spectacle.price}}$</b> </p>
       </div>
     </div>
     {% endfor %}

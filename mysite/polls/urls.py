@@ -6,6 +6,33 @@ from django.views.generic import *
 
 
 urlpatterns = [
-    url(r'^accueil$', views.index, name='index'),
-     url(r'^Article_Humor$', views.articleHumor.as_view()),
+    url(r'^accueil$', views.index.as_view(), name='index'),
+    url(r'^Spectacles_Humor$', views.spectaclesHumor.as_view()),
+    url(r'^Spectacles_Theater$', views.spectaclesTheater.as_view()),
+    url(r'^Spectacles_Danse$', views.spectaclesDanse.as_view()),
+    url(r'^Festivals_Rock$', views.festivalsRocks.as_view()),
+    url(r'^Festivals_Electro$', views.festivalsElectro.as_view()),
+    url(r'^Festivals_HipHop$', views.festivalsHipHop.as_view()),
+
+    url(r'^ExpoGrandPalais$', views.expoGrandPalais.as_view()),
+    url(r'^Expo_Museum$', views.expoMuseum.as_view()),
+    url(r'^Expo_Expo$', views.expoExpo.as_view()),
+    url(r'^Concerts_Rock$', views.concertsRock.as_view()),
+    url(r'^Concerts_Electro$', views.concertsElectro.as_view()),
+    url(r'^Concerts_HipHop$', views.concertsHipHop.as_view()),
+
+    url(r'^Spectacles_Humor/(?P<pk>\d+)$', views.article.as_view(), name='spectacles_humor'),
+    url(r'^Spectacles_Theater/(?P<pk>\d+)$', views.article.as_view(), name='spectacles_theater'),
+    url(r'^Spectacles_Danse/(?P<pk>\d+)$', views.article.as_view(), name='spectacles_danse'),
+    url(r'^Festivals_Rock/(?P<pk>\d+)$', views.article.as_view(), name='festival_rocks'),
+    url(r'^Festivals_Electro/(?P<pk>\d+)$', views.article.as_view(), name='festival_electro'),
+    url(r'^Festivals_HipHop/(?P<pk>\d+)$', views.article.as_view(), name='festival_hip-hop'),
+
+    url(r'^ExpoGrandPalais/(?P<pk>\d+)$', views.article.as_view(), name='expo_grand-palais'),
+    url(r'^Expo_Museum/(?P<pk>\d+)$', views.article.as_view(), name='expo_museum'),
+    url(r'^Expo_Expo/(?P<pk>\d+)$', views.article.as_view(), name='expo_expo'),
+    url(r'^Concerts_Rock/(?P<pk>\d+)$', views.article.as_view(), name='concert_rock'),
+    url(r'^Concerts_Electro/(?P<pk>\d+)$', views.article.as_view(), name='concert_electro'),
+    url(r'^Concerts_HipHop/(?P<pk>\d+)$', views.article.as_view(), name='concert_hip-hop'),
+
 ]
