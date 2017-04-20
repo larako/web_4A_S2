@@ -43,5 +43,4 @@ class Spectacles(models.Model):
 
 
 
-
 # Create your models here.

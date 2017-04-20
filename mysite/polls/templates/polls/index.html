@@ -80,13 +80,13 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   
   <!-- Top header -->
   <header class="w3-container w3-xlarge">
-
     <p class="w3-left"></p>
-    <p class="w3-padding w3-display-topmiddle">
-     
-       <input class="w3-input w3-border w3-animate-inpu w3-small" type="text"  placeholder="Search.." style="width:70%">
-      
-    </p>
+     <form action="{% url 'Search' %}" method="get" accept-charset="utf-8">
+     <p class="w3-padding w3-display-topmiddle">
+       <input class="w3-input w3-border w3-animate-inpu w3-small" type="text"  placeholder="Search.." style="width:70%" name ="q"> <input class="w3-input w3-border w3-animate-inpu w3-small" type="button" value="envoyer" name="btn" style="display:none">
+     </p>
+      </form>
+    
     <p class="w3-right">
       <a href="#connection"  class="w3-button w3-red w3-margin-bottom w3-small">Connection</a>
        <button type="button" class="w3-button w3-red w3-margin-bottom w3-border w3-small">registration</button>
@@ -116,8 +116,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     </div>
     {% endfor %}
   </div>
-
-  <!-- Subscribe section -->
+    <!-- Subscribe section -->
 
   <div class="w3-container w3-black w3-padding-32" id="connection">
     <h1>Connection</h1>    

@@ -7,6 +7,7 @@ from django.views.generic import *
 
 urlpatterns = [
     url(r'^accueil$', views.index.as_view(), name='index'),
+	url(r'^Search$', views.Search.as_view(), name='Search'),
     url(r'^Spectacles_Humor$', views.spectaclesHumor.as_view()),
     url(r'^Spectacles_Theater$', views.spectaclesTheater.as_view()),
     url(r'^Spectacles_Danse$', views.spectaclesDanse.as_view()),

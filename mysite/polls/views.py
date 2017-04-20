@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from django.views.generic import *
 from django.template import loader
 from polls.models import *
+import operator
+from django.db.models import Q
+from functools import reduce
 
 class index(ListView):
 	model = Spectacles
@@ -77,4 +80,23 @@ class article(DetailView):
 	model = Spectacles
 	context_object_name = "article"
 	template_name= 'polls/article.html'
+
+
+class Search (ListView):
+	model = Spectacles
+	context_object_name = "article"
+	template_name= 'polls/articles.html'
+	def get_queryset(self):
+		result = super(Search, self).get_queryset()
+		query = self.request.GET.get('q')
+		if query:
+			query_list = query.split()
+			result = result.filter(
+				reduce(operator.and_,
+					(Q(name__icontains=q) for q in query_list))|
+				reduce(operator.and_,
+					(Q(artistes__name__icontains=q) for q in query_list))
+
+			)
+		return result
 # Create your views here.
