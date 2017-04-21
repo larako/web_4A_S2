@@ -20,12 +20,14 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     <h3 class="w3-wide"><b>LOGO</b></h3>
   </div>
   <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
+
+    <a  href="/accueil" class="w3-button w3-block w3-light-grey w3-left-align"> Accueil </a>
  
     <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-light-grey w3-left-align" id="myBtn">
       Spectacles <i class="fa fa-caret-down"></i>
     </a>
     <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-      <a href="Spectacles_Humor" class="w3-bar-item w3-button ><i class="fa fa-caret-right w3-margin-right"></i>Humor</a>
+      <a href="/Spectacles_Humor" class="w3-bar-item w3-button ><i class="fa fa-caret-right w3-margin-right"></i>Humor</a>
       <a href="/Spectacles_Theater" class="w3-bar-item w3-button">Theater</a>
       <a href="/Spectacles_Danse" class="w3-bar-item w3-button">Danse</a>
     </div>
@@ -80,21 +82,15 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   
   <!-- Top header -->
   <header class="w3-container w3-xlarge">
-    <p class="w3-left"></p>
+     <p class="w3-left"></p>
      <form action="{% url 'Search' %}" method="get" accept-charset="utf-8">
      <p class="w3-padding w3-display-topmiddle">
        <input class="w3-input w3-border w3-animate-inpu w3-small" type="text"  placeholder="Search.." style="width:70%" name ="q"> <input class="w3-input w3-border w3-animate-inpu w3-small" type="button" value="envoyer" name="btn" style="display:none">
      </p>
       </form>
-    
     <p class="w3-right">
-      {% if user.is_authenticated %}        
-        <a href="/useraccount"  class="w3-button w3-red w3-margin-bottom w3-small">{{ user.username }}</a>
-        <a href="/signout"  class="w3-button w3-red w3-margin-bottom w3-small">Sign out</a>
-      {% else %}
-      <a href="/signin"  class="w3-button w3-red w3-margin-bottom w3-small">Sign in</a>
-      <a href="/signup"  class="w3-button w3-red w3-margin-bottom w3-small">Sign up</a>      
-      {% endif %}
+      <a href="#connection"  class="w3-button w3-red w3-margin-bottom w3-small">Connection</a>
+       <button type="button" class="w3-button w3-red w3-margin-bottom w3-border w3-small">registration</button>
     </p>
   </header>
 
@@ -111,15 +107,31 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
         {% endfor %} -->
        
       <div class="w3-row w3-grayscale">
-      {% for spectacle in object_list %}
     <div class="w3-col l3 s6">
       <div class="w3-container">
       {% load  static %}
-       <a href="{% url spectacle.categories|slugify spectacle.id %}"> <img  src="{% static spectacle.pictures%}" width=150 height=225 ></a>
-        <p>{{ spectacle.name }}<br> <b>{{spectacle.price}}$</b> </p>
+       <img src="{% static article.pictures%}" width=150 height=225>
+        <p>{{ article.name }}<br><i>{{ article.artistes.all|join:", "}}</i> 
+  <br><b>{{article.price}}$</b> </p>
       </div>
     </div>
-    {% endfor %}
+
+    <div class="w3-col l3 s6">
+      <div class="w3-container">
+        <p>{{ article.description }}</p>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- Subscribe section -->
+
+  <div class="w3-container w3-black w3-padding-32" id="connection">
+    <h1>Connection</h1>    
+    <p><input class="w3-input w3-border" type="text" placeholder="e-mail" style="width:100%"></p>
+    <p><input class="w3-input w3-border" type="text" placeholder="password" style="width:100%"></p>
+    <button type="button" class="w3-button w3-red w3-margin-bottom">connect</button>
   </div>
  
   <!-- Footer -->

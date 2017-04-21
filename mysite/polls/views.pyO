@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import *
 from django.template import loader
@@ -6,11 +6,6 @@ from polls.models import *
 import operator
 from django.db.models import Q
 from functools import reduce
-from django.contrib.auth import authenticate, login, logout
-from polls.forms import *
-from django.urls import reverse
-from django.contrib.auth.models import User
-import re 
 
 class index(ListView):
 	model = Spectacles
@@ -104,54 +99,4 @@ class Search (ListView):
 
 			)
 		return result
-
-
-def connexion(request):
-    error = False
-
-    if request.method == "POST":
-        form = ConnexionForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data["username"]
-            password = form.cleaned_data["password"]
-            user = authenticate(username=username, password=password)  # Nous vérifions si les données sont correctes
-            if user:  # Si l'objet renvoyé n'est pas None
-                login(request, user)  # nous connectons l'utilisateur
-            else: # sinon une erreur sera affichée
-                error = True
-    else:
-        form = ConnexionForm()
-
-    return render(request, 'polls/connexion.html', locals())
-
-def deconnexion(request):
-    logout(request)
-    return redirect("/accueil")
-
-def signup(request):
-    error = False
-    errorpasswd = False
-
-    if request.method == "POST":
-        form = SignupForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data["username"]
-            password = form.cleaned_data["password"]
-            confirm_password = form.cleaned_data["confirm_password"]
-            email = form.cleaned_data["email"]
-            if password != confirm_password:
-                errorpasswd = True
-            else:
-                if re.fullmatch("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,})$", password) is not None:
-                    user, created = User.objects.get_or_create(username=username, email=email)
-                    if created:  # Utilisateur crée
-                        user.set_password(password)
-                        user.save() #enregistre l'utilisateur
-                    else: 
-                        error = True
-                else:
-                    errorpasswd2 = True
-    else:
-        form = SignupForm()
-    return render(request, 'polls/signup.html', locals())
 # Create your views here.

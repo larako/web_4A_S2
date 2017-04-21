@@ -4,9 +4,10 @@ from polls import views
 from polls.models import *
 from django.views.generic import *
 
+
 urlpatterns = [
     url(r'^accueil$', views.index.as_view(), name='index'),
-    url(r'^Search$', views.Search.as_view(), name='Search'),
+	url(r'^Search$', views.Search.as_view(), name='Search'),
     url(r'^Spectacles_Humor$', views.spectaclesHumor.as_view()),
     url(r'^Spectacles_Theater$', views.spectaclesTheater.as_view()),
     url(r'^Spectacles_Danse$', views.spectaclesDanse.as_view()),
@@ -34,8 +35,5 @@ urlpatterns = [
     url(r'^Concerts_Rock/(?P<pk>\d+)$', views.article.as_view(), name='concert_rock'),
     url(r'^Concerts_Electro/(?P<pk>\d+)$', views.article.as_view(), name='concert_electro'),
     url(r'^Concerts_HipHop/(?P<pk>\d+)$', views.article.as_view(), name='concert_hip-hop'),
-    
-    url(r'^signin$', views.connexion, name='connexion'),
-    url(r'^signout$', views.deconnexion, name='deconnexion'),
-    url(r'^signup$', views.signup, name='signup'),
+
 ]
