@@ -21,32 +21,57 @@ class spectaclesHumor(ListView):
 	template_name= 'polls/articles.html'
 	queryset = Spectacles.objects.filter(categories__name__exact='Spectacles_Humor')
 
+	def get_context_data(self, **kwargs):
+		ctx= super(spectaclesHumor,self).get_context_data(**kwargs)
+		ctx['title']="Humor Spectacles"
+		return ctx
+
 
 class spectaclesTheater(ListView):
 	model = Spectacles
 	template_name= 'polls/articles.html'
 	queryset = Spectacles.objects.filter(categories__name__exact='Spectacles_Theater')
+	def get_context_data(self, **kwargs):
+		ctx= super(spectaclesTheater,self).get_context_data(**kwargs)
+		ctx['title']="Theater Spectacles"
+		return ctx
 
 class spectaclesDanse(ListView):
 	model = Spectacles
 	template_name= 'polls/articles.html'
 	queryset = Spectacles.objects.filter(categories__name__exact='Spectacles_Danse')
+	
+	def get_context_data(self, **kwargs):
+		ctx= super(spectaclesDanse,self).get_context_data(**kwargs)
+		ctx['title']="Danse Spectacles"
+		return ctx
 
 class festivalsRocks(ListView):
 	model = Spectacles
 	template_name= 'polls/articles.html'
 	queryset = Spectacles.objects.filter(categories__name__exact='Festival_Rocks')
+	def get_context_data(self, **kwargs):
+		ctx= super(festivalsRocks,self).get_context_data(**kwargs)
+		ctx['title']="Rock Festivals"
+		return ctx
 
 class festivalsElectro(ListView):
 	model = Spectacles
 	template_name= 'polls/articles.html'
 	queryset = Spectacles.objects.filter(categories__name__exact='Festival_Electro')
+	def get_context_data(self, **kwargs):
+		ctx= super(festivalsElectro,self).get_context_data(**kwargs)
+		ctx['title']="Electro Festivals"
+		return ctx
 
 class festivalsHipHop(ListView):
 	model = Spectacles
 	template_name= 'polls/articles.html'
 	queryset = Spectacles.objects.filter(categories__name__exact='Festival_HIP-HOP')
-
+	def get_context_data(self, **kwargs):
+		ctx= super(festivalsHipHop,self).get_context_data(**kwargs)
+		ctx['title']="HipHop Festivals"
+		return ctx
 
 
 
@@ -54,31 +79,55 @@ class concertsRock(ListView):
 	model = Spectacles
 	template_name= 'polls/articles.html'
 	queryset = Spectacles.objects.filter(categories__name__exact='Concert_Rock')
+	def get_context_data(self, **kwargs):
+		ctx= super(concertsRock,self).get_context_data(**kwargs)
+		ctx['title']="Rock Concerts"
+		return ctx
 
 class concertsElectro(ListView):
 	model = Spectacles
 	template_name= 'polls/articles.html'
 	queryset = Spectacles.objects.filter(categories__name__exact='Concert_Electro')
+	def get_context_data(self, **kwargs):
+		ctx= super(concertsElectro,self).get_context_data(**kwargs)
+		ctx['title']="Electro Concerts"
+		return ctx
 
 class concertsHipHop(ListView):
 	model = Spectacles
 	template_name= 'polls/articles.html'
 	queryset = Spectacles.objects.filter(categories__name__exact='Concert_HIP-HOP')
+	def get_context_data(self, **kwargs):
+		ctx= super(concertsHipHop,self).get_context_data(**kwargs)
+		ctx['title']="HipHop Concerts"
+		return ctx
 
 class expoGrandPalais(ListView):
 	model = Spectacles
 	template_name= 'polls/articles.html'
 	queryset = Spectacles.objects.filter(categories__name__exact='Expo_Grand Palais')
+	def get_context_data(self, **kwargs):
+		ctx= super(expoGrandPalais,self).get_context_data(**kwargs)
+		ctx['title']="Expo GrandPalais"
+		return ctx
 
 class expoMuseum(ListView):
 	model = Spectacles
 	template_name= 'polls/articles.html'
 	queryset = Spectacles.objects.filter(categories__name__exact='Expo_Museum')
+	def get_context_data(self, **kwargs):
+		ctx= super(expoMuseum,self).get_context_data(**kwargs)
+		ctx['title']="Expo Museum"
+		return ctx
 
 class expoExpo(ListView):
 	model = Spectacles
 	template_name= 'polls/articles.html'
 	queryset = Spectacles.objects.filter(categories__name__exact='Expo_Expo')
+	def get_context_data(self, **kwargs):
+		ctx= super(expoExpo,self).get_context_data(**kwargs)
+		ctx['title']="Expo EXpo"
+		return ctx
 
 
 class article(DetailView):
@@ -126,7 +175,7 @@ def connexion(request):
 
 def deconnexion(request):
     logout(request)
-    return redirect("/accueil")
+    return redirect("/")
 
 def signup(request):
     error = False
