@@ -1,17 +1,17 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
-
-class User(models.Model):
-	first_name = models.CharField(max_length=30)
-	last_name = models.CharField(max_length=30)
-	email = models.CharField(max_length=40)
-	password = models.CharField(max_length=30)
-	pseudo = models.CharField(max_length=30)
-	role = models.CharField(max_length=30)
-
-	def __str__(self):
-		return self.last_name
+#class User(models.Model):
+#	first_name = models.CharField(max_length=30)
+#	last_name = models.CharField(max_length=30)
+#	email = models.CharField(max_length=40)
+#	password = models.CharField(max_length=30)
+#	pseudo = models.CharField(max_length=30)
+#	role = models.CharField(max_length=30)
+#
+#	def __str__(self):
+#		return self.last_name
 
 
 class Categories(models.Model):

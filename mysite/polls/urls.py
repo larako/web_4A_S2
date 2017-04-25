@@ -35,7 +35,9 @@ urlpatterns = [
     url(r'^Concerts_Electro/(?P<pk>\d+)$', views.article.as_view(), name='concert_electro'),
     url(r'^Concerts_HipHop/(?P<pk>\d+)$', views.article.as_view(), name='concert_hip-hop'),
     
-    url(r'^signin$', views.connexion, name='connexion'),
-    url(r'^signout$', views.deconnexion, name='deconnexion'),
-    url(r'^signup$', views.signup, name='signup'),
+    url(r'^signin/*$', views.connexion, name='connexion'),
+    url(r'^signout/*$', views.deconnexion, name='deconnexion'),
+    url(r'^signup/*$', views.signup, name='signup'),
+    url(r'^profile$', views.userUpdate, name='userUpdate'),
+    url(r'^cpassword/$', views.change_password, name='change_password'),
 ]

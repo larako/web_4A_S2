@@ -124,3 +124,5 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = '/polls/'
 
 MEDIA_URL = 'http://localhost/polls/'
+
+LOGIN_URL = '/signin/'

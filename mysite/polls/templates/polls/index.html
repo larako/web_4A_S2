@@ -88,13 +88,13 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
       </form>
     
     <p class="w3-right">
-      {% if user.is_authenticated %}        
-        <a href="/useraccount"  class="w3-button w3-red w3-margin-bottom w3-small">{{ user.username }}</a>
-        <a href="/signout"  class="w3-button w3-red w3-margin-bottom w3-small">Sign out</a>
-      {% else %}
-      <a href="/signin"  class="w3-button w3-red w3-margin-bottom w3-small">Sign in</a>
-      <a href="/signup"  class="w3-button w3-red w3-margin-bottom w3-small">Sign up</a>      
-      {% endif %}
+        {% if user.is_authenticated %}        
+        <a href="/profile"  class="w3-button w3-red w3-margin-bottom w3-small">{{ user.username }}</a>
+        <a href="/signout/?next={{request.path}}"  class="w3-button w3-red w3-margin-bottom w3-small">Sign out</a>
+        {% else %}
+        <a href="/signin/?next={{request.path}}"  class="w3-button w3-red w3-margin-bottom w3-small">Sign in</a>
+        <a href="/signup/?next={{request.path}}"  class="w3-button w3-red w3-margin-bottom w3-small">Sign up</a>      
+        {% endif %}
     </p>
   </header>
 
