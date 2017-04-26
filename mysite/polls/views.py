@@ -14,6 +14,10 @@ from polls.forms import *
 from django.urls import reverse
 from django.contrib.auth.models import User
 import re 
+import requests
+import json
+from requests.auth import HTTPBasicAuth
+from django.http import JsonResponse
 
 class index(ListView):
     model = Spectacles
@@ -187,6 +191,7 @@ def userUpdate(request):
 
     return render(request, 'polls/profile.html', locals())
 
+@login_required
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
@@ -202,4 +207,47 @@ def change_password(request):
     return render(request, 'polls/change_password.html', {
         'form': form
     })
+
+@login_required
+def create_payment(request):
+
+    url = 'https://api.sandbox.paypal.com/v1/oauth2/token'
+    headers = {"Accept":"application/json", "Accept-Language":"en_US"}
+    username = "AY4_ODDSaxYXQuHlGctxmcuVJupD0Q1Nj8qPzG7TE6n99FXKrZeuWmFN9T8PMH0K2eRhCdBkAz0f7Fkh"
+    password = "EM1s7qcrVsotqkXK0-HRCjLaywRUujyDCORgc2vZNotQGK_iUmt8jC2ihjy2zZ7YicdjxTvP2C_LRbZZ"
+    r = requests.post(url, headers=headers, auth=(username, password), data={'grant_type':'client_credentials'})
+
+    response = json.loads(r.text)
+    token = response['access_token']
+
+    url = 'https://api.sandbox.paypal.com/v1/payments/payment'
+    headers = {"Content-Type":"application/json", "Authorization":"Bearer " + token}
+    payload = {"intent":"sale",
+              "redirect_urls":{
+                "return_url":"http://example.com/your_redirect_url.html",
+                "cancel_url":"http://example.com/your_cancel_url.html"
+              },
+              "payer":{
+                "payment_method":"paypal"
+              },
+              "transactions":[
+                {
+                  "amount":{
+                    "total":"7.47",
+                    "currency":"EUR"
+                  }
+                }
+              ]
+              }
+    r = requests.post(url, headers=headers, data=json.dumps(payload))
+    response = json.loads(r.text)
+    trans_id = response['id']
+    trans_state = response['state']
+
+    return JsonResponse({'paymentID':trans_id})
+    #data = {}
+    #data['paymentID'] = trans_id
+    #json_data = json.dumps(data)
+    #print(json_data)
+    #return render(request, 'polls/create_payment.html')
 # Create your views here.

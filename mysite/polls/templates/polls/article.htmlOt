@@ -123,7 +123,8 @@
 
                 <div class="w3-col l3 s6">
                   <div class="w3-container">
-                    <p>{{ article.description }}</p>
+                    <p>{{ article.description }}</p>                    
+                    <div id="paypal-button"></div>
                   </div>
                 </div>
 
@@ -193,7 +194,6 @@
                 </div>
               </div>
             </div>
-
             <script>
 // Accordion 
 function myAccFunc() {
@@ -254,6 +254,32 @@ function w3_close() {
   document.getElementById("mySidebar").style.display = "none";
   document.getElementById("myOverlay").style.display = "none";
 }
+</script>
+
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+<script>
+    paypal.Button.render({
+    
+        //env: 'production', // Optional: specify 'sandbox' environment
+
+        env : 'sandbox',
+        locale: 'en_GB',
+        style: {
+            size: 'small',
+            color: 'gold',
+            shape: 'pill',
+            label: 'checkout'
+        },
+        payment: function() {
+            // Set up the payment here, when the buyer clicks on the button
+        },
+
+        onAuthorize: function(data, actions) {
+            // Execute the payment here, when the buyer approves the transaction
+       }
+            
+    }, '#paypal-button');
 </script>
 
 </body>
