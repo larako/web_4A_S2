@@ -115,6 +115,11 @@ USE_L10N = True
 
 USE_TZ = True
 
+BRAINTREE_MERCHANT_ID = 'q6978cmvqxt69qp7'
+BRAINTREE_PUBLIC_KEY = 'p77z8hpmcj285xp9'
+BRAINTREE_PRIVATE_KEY = '5a172ed06164422a23d4726b4e224e4a'
+
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/

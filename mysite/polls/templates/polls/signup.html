@@ -17,7 +17,7 @@
 	<nav class="w3-sidebar w3-bar-block w3-collapse w3-top w3-light-grey" style="z-index:3;width:250px" id="mySidebar">
 		<div class="w3-container w3-display-container w3-padding-16">
 			<i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
-			<h3 class="w3-wide"><b>LOGO</b></h3>
+			<h3 class="w3-wide"><b>TicketsSales</b></h3>
 		</div>
 		<div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
 
@@ -65,7 +65,7 @@
 
 <!-- Top menu on small screens -->
 <header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
-	<div class="w3-bar-item w3-padding-24 w3-wide">LOGO</div>
+	<div class="w3-bar-item w3-padding-24 w3-wide">TicketSale</div>
 	<a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-24 w3-right" onclick="w3_open()"><i class="fa fa-bars"></i></a>
 </header>
 
@@ -113,7 +113,7 @@
 		{% endif %}
 	</div>
 	<!-- Product grid -->
-	<div class="w3-row w3-grayscale">
+	<div class="w3-row">
 		<center>
 			{% if user.is_authenticated %}
 			Hello {{ user.username }}! Welcome to TicketsSales. We will redirect you to your personnal account within few seconds.
@@ -174,8 +174,6 @@
 			</div>
 		</div>
 	</footer>
-
-	<div class="w3-black w3-center w3-padding-24">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></div>
 
 	<!-- End page content -->
 </div>

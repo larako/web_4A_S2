@@ -17,17 +17,17 @@
   <nav class="w3-sidebar w3-bar-block w3-collapse w3-top w3-light-grey" style="z-index:3;width:250px" id="mySidebar">
     <div class="w3-container w3-display-container w3-padding-16">
       <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
-      <h3 class="w3-wide"><b>TicketsSales</b></h3>
+      <h3 class="w3-wide"><b>LOGO</b></h3>
     </div>
     <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
-     
-      <a  href="/" class="w3-button w3-block w3-light-grey w3-left-align"> Accueil  </a>
 
+      <a  href="/" class="w3-button w3-block w3-light-grey w3-left-align"> Accueil </a>
+      
       <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-light-grey w3-left-align" id="myBtn">
         Spectacles <i class="fa fa-caret-down"></i>
       </a>
       <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-        <a href="Spectacles_Humor" class="w3-bar-item w3-button ><i class="fa fa-caret-right w3-margin-right"></i>Humor</a>
+        <a href="/Spectacles_Humor" class="w3-bar-item w3-button ><i class="fa fa-caret-right w3-margin-right"></i>Humor</a>
         <a href="/Spectacles_Theater" class="w3-bar-item w3-button">Theater</a>
         <a href="/Spectacles_Danse" class="w3-bar-item w3-button">Danse</a>
       </div>
@@ -81,12 +81,10 @@
   
   <!-- Top header -->
   <header class="w3-container w3-xlarge">
-
-
-    <p class="w3-left"> {{title}}</p>
-    <form action="{% url 'Search' %}" method="get" accept-charset="utf-8">
+   <p class="w3-left"></p>
+   <form action="{% url 'Search' %}" method="get" accept-charset="utf-8">
      <p class="w3-padding w3-display-topmiddle">
-       <input class="w3-input w3-border w3-animate-inpu w3-small" type="text"  src="img_fjords.jpg" placeholder="Search.." style="width:70%" name ="q"> <input class="w3-input w3-border w3-animate-inpu w3-small" type="button" value="envoyer" name="btn" style="display:none">
+       <input class="w3-input w3-border w3-animate-inpu w3-small" type="text"  placeholder="Search.." style="width:70%" name ="q"> <input class="w3-input w3-border w3-animate-inpu w3-small" type="button" value="envoyer" name="btn" style="display:none">
      </p>
    </form>
    <p class="w3-right">
@@ -113,73 +111,135 @@
             {% endfor %} -->
             
             <div class="w3-row ">
-              {% for spectacle in object_list %}
               <div class="w3-col l3 s6">
                 <div class="w3-container">
-                  {% load  static %}
-                  <a href="{% url spectacle.categories|slugify spectacle.id %}"> <img  src="{% static spectacle.pictures%}" width=150 height=225 ></a>
-                  <p>{{ spectacle.name }}<br> <b>{{spectacle.price}}$</b> </p>
+                	<form id="checkout-form" action="/Thanks" method="post">{% csrf_token %}
+  <div id="error-message"></div>
+
+  <label for="card-number">Card Number</label>
+  <div class="hosted-field" id="card-number"></div>
+
+  <label for="cvv">CVV</label>
+  <div class="hosted-field" id="cvv"></div>
+
+  <label for="expiration-date">Expiration Date</label>
+  <div class="hosted-field" id="expiration-date"></div>
+
+  <input type="hidden" name="payment_method_nonce" value="paypal_account">
+  <input type="submit" value="Pay {{digit}}$" disabled>
+</form>
+
+			
+
+<!-- Load the Client component. -->
+<script src="https://js.braintreegateway.com/web/3.12.1/js/client.min.js"></script>
+
+<!-- Load the Hosted Fields component. -->
+<script src="https://js.braintreegateway.com/web/3.12.1/js/hosted-fields.min.js"></script>
+
+<script>
+// We generated a client token for you so you can test out this code
+// immediately. In a production-ready integration, you will need to
+// generate a client token on your server (see section below).
+var authorization = "{{braintree_client_token}}" ;
+var submit = document.querySelector('input[type="submit"]');
+
+braintree.client.create({
+  authorization: authorization
+}, function (clientErr, clientInstance) {
+  if (clientErr) {
+    // Handle error in client creation
+    return;
+  }
+
+  braintree.hostedFields.create({
+    client: clientInstance,
+    styles: {
+      'input': {
+        'font-size': '14pt'
+      },
+      'input.invalid': {
+        'color': 'red'
+      },
+      'input.valid': {
+        'color': 'green'
+      }
+    },
+    fields: {
+      number: {
+        selector: '#card-number',
+        placeholder: '4111 1111 1111 1111'
+      },
+      cvv: {
+        selector: '#cvv',
+        placeholder: '123'
+      },
+      expirationDate: {
+        selector: '#expiration-date',
+        placeholder: '10/2019'
+      }
+    }
+  }, function (hostedFieldsErr, hostedFieldsInstance) {
+    if (hostedFieldsErr) {
+      // Handle error in Hosted Fields creation
+      return;
+    }
+
+    submit.removeAttribute('disabled');
+  });
+});
+</script>
+
+
+    
+                  </div>
                 </div>
+
+                <div class="w3-col l3 s6">
+                  <div class="w3-container">
+                    
+                   
+                  </div>
+                </div>
+
               </div>
-              {% endfor %}
+
+              
+              <!-- Footer -->
+              <footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">
+                <div class="w3-row-padding">
+                  <div class="w3-col s4">
+                  
+                  </div>
+
+                  <div class="w3-col s4">
+                 
+                  </div>
+
+                  <div class="w3-col s4 w3-justify">
+
+                  </div>
+                </div>
+              </footer>
+
+
+              <!-- End page content -->
             </div>
-            
-            <!-- Footer -->
-            <footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">
-              <div class="w3-row-padding">
-                <div class="w3-col s4">
 
+            <!-- Newsletter Modal -->
+            <div id="newsletter" class="w3-modal">
+              <div class="w3-modal-content w3-animate-zoom w3-padding-jumbo">
+                <div class="w3-container w3-white w3-center">
+                  <i onclick="document.getElementById('newsletter').style.display='none'" class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
+                  <h2 class="w3-wide">NEWSLETTER</h2>
+                  <p>Join our mailing list to receive updates on new arrivals and special offers.</p>
+                  <p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail"></p>
+                  <button type="button" class="w3-button w3-padding-large w3-red w3-margin-bottom" onclick="document.getElementById('newsletter').style.display='none'">Subscribe</button>
                 </div>
-
-                <div class="w3-col s4">
-                  <h4>About</h4>
-                  <p><a href="#">About us</a></p>
-                  <p><a href="#">We're hiring</a></p>
-                  <p><a href="#">Support</a></p>
-                  <p><a href="#">Find store</a></p>
-                  <p><a href="#">Shipment</a></p>
-                  <p><a href="#">Payment</a></p>
-                  <p><a href="#">Gift card</a></p>
-                  <p><a href="#">Return</a></p>
-                  <p><a href="#">Help</a></p>
-                </div>
-
-                <div class="w3-col s4 w3-justify">
-                  <h4>Store</h4>
-                  <p><i class="fa fa-fw fa-map-marker"></i> Company Name</p>
-                  <p><i class="fa fa-fw fa-phone"></i> 0044123123</p>
-                  <p><i class="fa fa-fw fa-envelope"></i> ex@mail.com</p>
-                  <h4>We accept</h4>
-                  <p><i class="fa fa-fw fa-cc-amex"></i> Amex</p>
-                  <p><i class="fa fa-fw fa-credit-card"></i> Credit Card</p>
-                  <br>
-                  <i class="fa fa-facebook-official w3-xlarge w3-hover-text-indigo"></i>
-                  <i class="fa fa-instagram w3-xlarge w3-hover-text-purple"></i>
-                  <i class="fa fa-twitter w3-xlarge w3-hover-text-light-blue"></i>
-                  <i class="fa fa-pinterest w3-xlarge w3-hover-text-red"></i>
-                  <i class="fa fa-flickr w3-xlarge w3-hover-text-blue"></i>
-                </div>
-              </div>
-            </footer>
-
-
-            <!-- End page content -->
-          </div>
-
-          <!-- Newsletter Modal -->
-          <div id="newsletter" class="w3-modal">
-            <div class="w3-modal-content w3-animate-zoom w3-padding-jumbo">
-              <div class="w3-container w3-white w3-center">
-                <i onclick="document.getElementById('newsletter').style.display='none'" class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
-                <h2 class="w3-wide">NEWSLETTER</h2>
-                <p>Join our mailing list to receive updates on new arrivals and special offers.</p>
-                <p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail"></p>
-                <button type="button" class="w3-button w3-padding-large w3-red w3-margin-bottom" onclick="document.getElementById('newsletter').style.display='none'">Subscribe</button>
               </div>
             </div>
-          </div>
 
-          <script>
+            <script>
 // Accordion 
 function myAccFunc() {
   var x = document.getElementById("demoAcc");

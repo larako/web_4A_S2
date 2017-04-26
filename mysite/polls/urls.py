@@ -38,4 +38,7 @@ urlpatterns = [
     url(r'^signin$', views.connexion, name='connexion'),
     url(r'^signout$', views.deconnexion, name='deconnexion'),
     url(r'^signup$', views.signup, name='signup'),
+    url(r'^purchase/(?P<digit>\d+)/(?P<id>\d+)$', views.purchase,  name='purchase'),
+    url(r'^transactionEndpoint$',views.transactionEndpoint, name ='transactionEndpoint'),
+    url(r'^Thanks$' , views.thanks, name='thanks')
 ]

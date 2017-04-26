@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.models import User as Users
 
 
 class User(models.Model):
@@ -38,6 +40,25 @@ class Spectacles(models.Model):
 
 	def __str__(self):
 		return self.name
+
+class Resource(models.Model):
+	name=models.CharField( max_length=250 )
+	location = models.CharField( max_length=250 )
+	price = models.DecimalField( decimal_places=2, max_digits=7 )
+
+class Purchase( models.Model ):
+	Spectacles = models.IntegerField()
+	purchaser = purchaser = models.IntegerField( )
+	purchased_at = models.DateTimeField(auto_now_add=True)
+	tx = models.IntegerField()
+
+	def __str__(self):
+		return self.purchaser
+
+
+
+
+ 
 
 
 

@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.views.generic import *
 from django.template import loader
 from polls.models import *
+from datetime import datetime
+from polls.models import Purchase as p
 import operator
 from django.db.models import Q
 from functools import reduce
@@ -10,7 +12,54 @@ from django.contrib.auth import authenticate, login, logout
 from polls.forms import *
 from django.urls import reverse
 from django.contrib.auth.models import User
-import re 
+
+import braintree
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views import generic
+
+from django.contrib.auth.decorators import login_required
+from . import forms
+
+def transactionEndpoint(request):
+	return render(request, 'polls/transactionEndpoint.html')
+
+@login_required
+def purchase(request, digit,id): #digit correspond au montant a payer
+	form_class = forms.CheckoutForm
+	template_name = 'polls/purchase.html'
+	user = request.user
+	insert = p(Spectacles=id, purchaser=user.id, purchased_at=datetime.now(), tx=digit ) #on insere dans la BDD l'achat 
+	#digit = self.kwargs['digit']
+	braintree.Configuration.configure(braintree.Environment.Sandbox, #on se connecte
+		merchant_id= 'q6978cmvqxt69qp7',
+		public_key= 'p77z8hpmcj285xp9',
+		private_key='5a172ed06164422a23d4726b4e224e4a')
+	braintree_client_token = braintree.ClientToken.generate({}) #on genere un token
+	result = braintree.Transaction.sale({ #on effectue la transaction
+		"amount": digit,	
+		"payment_method_nonce":'nonce-from-the-client',
+		"order_id" : "Mapped to PayPal Invoice Number",
+		"options" : {
+			"paypal": {
+				"custom_field" : "PayPal custom field",
+				"description" : "Description for PayPal email receipt",
+				},
+			},
+	})
+	
+	if result.is_success:
+		print("yeeeeeeeeees")
+	else:
+		print(format(result.message))
+	
+	return render(request,"polls/purchase.html",{'braintree_client_token':braintree_client_token, 'digit':digit})
+		
+def thanks(request):
+	return render(request, "polls/thanks.html")
+
+
+
 
 class index(ListView):
 	model = Spectacles
@@ -140,7 +189,7 @@ class Search (ListView):
 	model = Spectacles
 	context_object_name = "article"
 	template_name= 'polls/articles.html'
-	def get_queryset(self):
+	def get_queryset(self):	
 		result = super(Search, self).get_queryset()
 		query = self.request.GET.get('q')
 		if query:
@@ -153,6 +202,8 @@ class Search (ListView):
 
 			)
 		return result
+
+
 
 
 def connexion(request):
