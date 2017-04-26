@@ -89,11 +89,11 @@
    </form>
    <p class="w3-right">
     {% if user.is_authenticated %}        
-    <a href="/useraccount"  class="w3-button w3-red w3-margin-bottom w3-small">{{ user.username }}</a>
-    <a href="/signout"  class="w3-button w3-red w3-margin-bottom w3-small">Sign out</a>
+    <a href="/profile"  class="w3-button w3-red w3-margin-bottom w3-small">{{ user.username }}</a>
+    <a href="/signout/?next={{request.path}}"  class="w3-button w3-red w3-margin-bottom w3-small">Sign out</a>
     {% else %}
-    <a href="/signin"  class="w3-button w3-red w3-margin-bottom w3-small">Sign in</a>
-    <a href="/signup"  class="w3-button w3-red w3-margin-bottom w3-small">Sign up</a>      
+    <a href="/signin/?next={{request.path}}"  class="w3-button w3-red w3-margin-bottom w3-small">Sign in</a>
+    <a href="/signup/?next={{request.path}}"  class="w3-button w3-red w3-margin-bottom w3-small">Sign up</a>      
     {% endif %}
   </p>
 </header>
@@ -122,6 +122,7 @@
 
                 <div class="w3-col l3 s6">
                   <div class="w3-container">
+
                     <p>{{ article.description }}</p>
                     <script type="text/javascript">
                   function add( nom ) {
@@ -164,9 +165,9 @@
                       {% else %}
                       document.write('<p> <b>you must be connected to purchase</b> </p>');
                       {% endif %}
-                      </script>
-              
-                    
+                      </script>                       
+                    <div id="paypal-button"></div>
+                 
                   </div>
                 </div>
 
@@ -226,7 +227,6 @@
                 </div>
               </div>
             </div>
-
             <script>
 // Accordion 
 function myAccFunc() {
@@ -287,6 +287,48 @@ function w3_close() {
   document.getElementById("mySidebar").style.display = "none";
   document.getElementById("myOverlay").style.display = "none";
 }
+</script>
+
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+<script>
+    paypal.Button.render({
+    
+        //env: 'production', // Optional: specify 'sandbox' environment
+
+        env : 'sandbox',
+        locale: 'en_GB',
+        style: {
+            size: 'small',
+            color: 'gold',
+            shape: 'pill',
+            label: 'checkout'
+        },
+
+        payment: function(resolve, reject) {
+            // Set up the payment here, when the buyer clicks on the button
+            var CREATE_PAYMENT_URL = 'http://127.0.0.1:8000/paypal/create-payment/';
+                
+            return paypal.request.get(CREATE_PAYMENT_URL)
+                .then(function(data) { resolve(data.paymentID); })
+                .catch(function(err) { reject(err); });
+        },
+
+        onAuthorize: function(data, actions) {
+            // Execute the payment here, when the buyer approves the transaction
+             // Note: you can display a confirmation page before executing
+            
+            var EXECUTE_PAYMENT_URL = 'http://127.0.0.1:8000/paypal/execute-payment/';
+
+            return paypal.request.post(EXECUTE_PAYMENT_URL,
+                    { paymentID: data.paymentID, payerID: data.payerID })
+                    
+                .then(function(data) { /* Go to a success page */ })
+                .catch(function(err) { /* Go to an error page  */ });
+        }
+
+    }, '#paypal-button');
+       
 </script>
 
 </body>

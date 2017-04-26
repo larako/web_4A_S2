@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -129,3 +128,14 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = '/polls/'
 
 MEDIA_URL = 'http://localhost/polls/'
+
+LOGIN_URL = '/signin/'
+
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'langedesenfers1@gmail.com'
+SERVER_EMAIL = 'langedesenfers1@gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'langedesenfers1@gmail.com'
+EMAIL_HOST_PASSWORD = 'maximonstredu97430'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

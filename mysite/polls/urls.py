@@ -1,5 +1,5 @@
 from django.conf.urls import url
-
+from django.contrib.auth import views as auth_views
 from polls import views
 from polls.models import *
 from django.views.generic import *
@@ -35,10 +35,23 @@ urlpatterns = [
     url(r'^Concerts_Electro/(?P<pk>\d+)$', views.article.as_view(), name='concert_electro'),
     url(r'^Concerts_HipHop/(?P<pk>\d+)$', views.article.as_view(), name='concert_hip-hop'),
     
+
     url(r'^signin$', views.connexion, name='connexion'),
     url(r'^signout$', views.deconnexion, name='deconnexion'),
     url(r'^signup$', views.signup, name='signup'),
     url(r'^purchase/(?P<digit>\d+)/(?P<id>\d+)$', views.purchase,  name='purchase'),
     url(r'^transactionEndpoint$',views.transactionEndpoint, name ='transactionEndpoint'),
-    url(r'^Thanks$' , views.thanks, name='thanks')
+    url(r'^Thanks$' , views.thanks, name='thanks'),
+
+    url(r'^profile$', views.userUpdate, name='userUpdate'),
+    url(r'^cpassword/$', views.change_password, name='change_password'),
+
+    url(r'^password_reset/$', auth_views.password_reset, name='password_reset'),
+    url(r'^password_reset/done/$', auth_views.password_reset_done, name='password_reset_done'),
+    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        auth_views.password_reset_confirm, name='password_reset_confirm'),
+    url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
+    url(r'^paypal/create-payment/$', views.create_payment, name='create_payment')
+
+
 ]
