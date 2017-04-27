@@ -17,12 +17,10 @@
   <nav class="w3-sidebar w3-bar-block w3-collapse w3-top w3-light-grey" style="z-index:3;width:250px" id="mySidebar">
     <div class="w3-container w3-display-container w3-padding-16">
       <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
-      <h3 class="w3-wide"><b>TicketsSales</b></h3>
+      <h3 class="w3-wide"><a href="/"><b>TicketsSales</b></a></h3>
     </div>
     <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
-
-      <a  href="/" class="w3-button w3-block w3-light-grey w3-left-align"> Accueil </a>
-      
+     
       <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-light-grey w3-left-align" id="myBtn">
         Spectacles <i class="fa fa-caret-down"></i>
       </a>
@@ -66,7 +64,7 @@
 
 <!-- Top menu on small screens -->
 <header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
-  <div class="w3-bar-item w3-padding-24 w3-wide">TicketSale</div>
+  <div class="w3-bar-item w3-padding-24 w3-wide">LOGO</div>
   <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-24 w3-right" onclick="w3_open()"><i class="fa fa-bars"></i></a>
 </header>
 
@@ -81,12 +79,13 @@
   
   <!-- Top header -->
   <header class="w3-container w3-xlarge">
-   <p class="w3-left"></p>
-   <form action="{% url 'Search' %}" method="get" accept-charset="utf-8">
+    <p class="w3-left"></p>
+    <form action="{% url 'Search' %}" method="get" accept-charset="utf-8">
      <p class="w3-padding w3-display-topmiddle">
        <input class="w3-input w3-border w3-animate-inpu w3-small" type="text"  placeholder="Search.." style="width:70%" name ="q"> <input class="w3-input w3-border w3-animate-inpu w3-small" type="button" value="envoyer" name="btn" style="display:none">
      </p>
    </form>
+   
    <p class="w3-right">
     {% if user.is_authenticated %}        
     <a href="/profile"  class="w3-button w3-red w3-margin-bottom w3-small">{{ user.username }}</a>
@@ -117,57 +116,57 @@
                   <img src="{% static article.pictures%}" width=150 height=225>
                   <p>{{ article.name }}<br><i>{{ article.artistes.all|join:", "}}</i> 
                    <br>{{article.place}} <br><b>{{article.price}}$</b> </p>
-                  </div>
-                </div>
+                 </div>
+               </div>
 
-                <div class="w3-col l3 s6">
-                  <div class="w3-container">
+               <div class="w3-col l3 s6">
+                <div class="w3-container">
 
-                    <p>{{ article.description }}</p>
-                    <script type="text/javascript">
-                  function add( nom ) {
-                    document.getElementById( nom ).value ++;
-                    window.location.reload();
+                  <p>{{ article.description }}</p>
+                  <script type="text/javascript">
+                    function add( nom ) {
+                      document.getElementById( nom ).value ++;
+                      window.location.reload();
                     }
-                  function substract( nom ) {
-                    if (document.getElementById( nom ).value >0)
-                    document.getElementById( nom ).value --;
-                    window.location.reload();
-                      }
+                    function substract( nom ) {
+                      if (document.getElementById( nom ).value >0)
+                        document.getElementById( nom ).value --;
+                      window.location.reload();
+                    }
 
                     function isNumberKey(evt)
                     {
-                    var charCode = (evt.which) ? evt.which : event.keyCode
-                    if (charCode > 31 && (charCode < 48 || charCode > 57))
-                      return false;
+                      var charCode = (evt.which) ? evt.which : event.keyCode
+                      if (charCode > 31 && (charCode < 48 || charCode > 57))
+                        return false;
 
-                        return true;
-                        }
-                      function Result( nom ){
-                        var price ={{article.price}}
-                        return price*document.getElementById( nom ).value
-                      }
-                    </script>
+                      return true;
+                    }
+                    function Result( nom ){
+                      var price ={{article.price}}
+                      return price*document.getElementById( nom ).value
+                    }
+                  </script>
 
 
-                    <form action="#" method="get">
+                  <form action="#" method="get">
                     <input type="text" value="1" id="quantite" name="quantite" size="2" maxlength="4" onkeypress="return isNumberKey(event);">
-                      <button type="button" class="w3-button w3-padding-small w3-black w3-margin-bottom" onclick="add('quantite');">+</button>
-                      <button type="button" class="w3-button w3-padding-small w3-black w3-margin-bottom" onclick="substract('quantite');">-</button>
-                      <script >
+                    <button type="button" class="w3-button w3-padding-small w3-black w3-margin-bottom" onclick="add('quantite');">+</button>
+                    <button type="button" class="w3-button w3-padding-small w3-black w3-margin-bottom" onclick="substract('quantite');">-</button>
+                    <script >
                       var result = Result('quantite');
                       var id ={{article.id}}
                       console.log(result);
                       {% if user.is_authenticated %} 
 
-                        document.write('</br><a href=/purchase/'+result+'/'+id+' class="w3-button w3-red w3-margin-bottom w3-small">'+result+'$ purchase</a>');
+                      document.write('</br><a href=/purchase/'+result+'/'+id+' class="w3-button w3-red w3-margin-bottom w3-small">'+result+'€ by Card</a>');
 
                       {% else %}
                       document.write('<p> <b>you must be connected to purchase</b> </p>');
                       {% endif %}
-                      </script>                       
+                    </script>                       
                     <div id="paypal-button"></div>
-                 
+                    
                   </div>
                 </div>
 
@@ -178,7 +177,7 @@
               <footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">
                 <div class="w3-row-padding">
                   <div class="w3-col s4">
-                  
+                    
                   </div>
 
                   <div class="w3-col s4">
@@ -211,6 +210,7 @@
                   </div>
                 </div>
               </footer>
+
 
               <!-- End page content -->
             </div>
@@ -292,44 +292,44 @@ function w3_close() {
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 
 <script>
-    paypal.Button.render({
+  paypal.Button.render({
     
         //env: 'production', // Optional: specify 'sandbox' environment
 
         env : 'sandbox',
         locale: 'en_GB',
         style: {
-            size: 'small',
-            color: 'gold',
-            shape: 'pill',
-            label: 'checkout'
+          size: 'small',
+          color: 'gold',
+          shape: 'pill',
+          label: 'checkout'
         },
 
         payment: function(resolve, reject) {
             // Set up the payment here, when the buyer clicks on the button
             var CREATE_PAYMENT_URL = 'http://127.0.0.1:8000/paypal/create-payment/';
-                
+            
             return paypal.request.get(CREATE_PAYMENT_URL)
-                .then(function(data) { resolve(data.paymentID); })
-                .catch(function(err) { reject(err); });
-        },
+            .then(function(data) { resolve(data.paymentID); })
+            .catch(function(err) { reject(err); });
+          },
 
-        onAuthorize: function(data, actions) {
+          onAuthorize: function(data, actions) {
             // Execute the payment here, when the buyer approves the transaction
              // Note: you can display a confirmation page before executing
-            
-            var EXECUTE_PAYMENT_URL = 'http://127.0.0.1:8000/paypal/execute-payment/';
+             
+             var EXECUTE_PAYMENT_URL = 'http://127.0.0.1:8000/paypal/execute-payment/';
 
-            return paypal.request.post(EXECUTE_PAYMENT_URL,
-                    { paymentID: data.paymentID, payerID: data.payerID })
-                    
-                .then(function(data) { /* Go to a success page */ })
-                .catch(function(err) { /* Go to an error page  */ });
-        }
+             return paypal.request.post(EXECUTE_PAYMENT_URL,
+              { paymentID: data.paymentID, payerID: data.payerID })
+             
+           .then(function(data) { /* Go to a success page */ })
+         .catch(function(err) { /* Go to an error page  */ });
+       }
 
-    }, '#paypal-button');
-       
-</script>
+     }, '#paypal-button');
+  
+   </script>
 
-</body>
-</html>
+ </body>
+ </html>

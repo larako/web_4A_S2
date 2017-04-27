@@ -17,17 +17,15 @@
   <nav class="w3-sidebar w3-bar-block w3-collapse w3-top w3-light-grey" style="z-index:3;width:250px" id="mySidebar">
     <div class="w3-container w3-display-container w3-padding-16">
       <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
-      <h3 class="w3-wide"><b>TicketsSales</b></h3>
+      <h3 class="w3-wide"><a href="/"><b>TicketsSales</b></a></h3>
     </div>
     <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
      
-      <a  href="/" class="w3-button w3-block w3-light-grey w3-left-align"> Accueil  </a>
-
       <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-light-grey w3-left-align" id="myBtn">
         Spectacles <i class="fa fa-caret-down"></i>
       </a>
       <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-        <a href="Spectacles_Humor" class="w3-bar-item w3-button ><i class="fa fa-caret-right w3-margin-right"></i>Humor</a>
+        <a href="/Spectacles_Humor" class="w3-bar-item w3-button ><i class="fa fa-caret-right w3-margin-right"></i>Humor</a>
         <a href="/Spectacles_Theater" class="w3-bar-item w3-button">Theater</a>
         <a href="/Spectacles_Danse" class="w3-bar-item w3-button">Danse</a>
       </div>
@@ -81,14 +79,13 @@
   
   <!-- Top header -->
   <header class="w3-container w3-xlarge">
-
-
-    <p class="w3-left"> {{title}}</p>
+    <p class="w3-left"></p>
     <form action="{% url 'Search' %}" method="get" accept-charset="utf-8">
      <p class="w3-padding w3-display-topmiddle">
-       <input class="w3-input w3-border w3-animate-inpu w3-small" type="text"  src="img_fjords.jpg" placeholder="Search.." style="width:70%" name ="q"> <input class="w3-input w3-border w3-animate-inpu w3-small" type="button" value="envoyer" name="btn" style="display:none">
+       <input class="w3-input w3-border w3-animate-inpu w3-small" type="text"  placeholder="Search.." style="width:70%" name ="q"> <input class="w3-input w3-border w3-animate-inpu w3-small" type="button" value="envoyer" name="btn" style="display:none">
      </p>
    </form>
+   
    <p class="w3-right">
     {% if user.is_authenticated %}        
     <a href="/profile"  class="w3-button w3-red w3-margin-bottom w3-small">{{ user.username }}</a>
@@ -101,6 +98,7 @@
 </header>
 
 <!-- Image header --  >
+
 
 
   <div class="w3-container w3-text-grey" id="jeans">
@@ -124,11 +122,12 @@
               {% endfor %}
             </div>
             
+            
             <!-- Footer -->
             <footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">
               <div class="w3-row-padding">
                 <div class="w3-col s4">
-
+                  
                 </div>
 
                 <div class="w3-col s4">
