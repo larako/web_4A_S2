@@ -50,9 +50,6 @@ class Purchase( models.Model ):
 	purchased_at = models.DateTimeField(auto_now_add=True)
 	tx = models.IntegerField()
 
-	def __str__(self):
-		return self.purchaser
-
 
 
 

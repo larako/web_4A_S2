@@ -3,6 +3,7 @@ from django.contrib.auth import views as auth_views
 from polls import views
 from polls.models import *
 from django.views.generic import *
+from django.views.generic import RedirectView
 
 urlpatterns = [
     url(r'^$', views.index.as_view(), name='index'),
@@ -20,6 +21,9 @@ urlpatterns = [
     url(r'^Concerts_Rock$', views.concertsRock.as_view()),
     url(r'^Concerts_Electro$', views.concertsElectro.as_view()),
     url(r'^Concerts_HipHop$', views.concertsHipHop.as_view()),
+
+
+    url(r'^Concert_HIP-HOP/(?P<pk>\d+)$',  RedirectView.as_view(url='/Concerts_HipHop/')),
 
     url(r'^Spectacles_Humor/(?P<pk>\d+)$', views.article.as_view(), name='spectacles_humor'),
     url(r'^Spectacles_Theater/(?P<pk>\d+)$', views.article.as_view(), name='spectacles_theater'),
@@ -51,7 +55,7 @@ urlpatterns = [
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         auth_views.password_reset_confirm, name='password_reset_confirm'),
     url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
-    url(r'^paypal/create-payment/$', views.create_payment, name='create_payment')
-
+    url(r'^paypal/create-payment/$', views.create_payment, name='create_payment'),
+    url(r'^vorders/$', views.vorders, name='vorders'),
 
 ]

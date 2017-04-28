@@ -15,15 +15,12 @@ from django.contrib.auth.decorators import login_required
 from polls.forms import *
 from django.urls import reverse
 from django.contrib.auth.models import User
-
 import braintree
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views import generic
-
 from django.contrib.auth.decorators import login_required
 from . import forms
-
 import re 
 import requests
 import json
@@ -31,41 +28,73 @@ from requests.auth import HTTPBasicAuth
 from django.http import JsonResponse
 
 def transactionEndpoint(request):
-	return render(request, 'polls/transactionEndpoint.html')
+    return render(request, 'polls/transactionEndpoint.html')
+
+@login_required
+def vorders(request):
+    user = request.user
+    purchases = Purchase.objects.filter(purchaser=user.id)
+
+    sName = []
+    sCat = []
+    sIllust = []
+    sID = []
+    date = []
+    amount = []
+    #data = [{'Sid': purchase.Spectacles ,'date': purchase.purchased_at, 'amount': purchase.tx} for purchase in purchases]
+    i = 0
+
+    for n in purchases:
+        spectaclesinfo = Spectacles.objects.filter(pk=n.Spectacles)
+        for m in spectaclesinfo:
+            sName.append(m.name)
+            sCat.append(m.categories)
+            sIllust.append(m.pictures)
+        sID.append(n.Spectacles)
+        date.append(n.purchased_at)
+        amount.append(n.tx)
+    
+    datalist = [{'sName': t[0], 'sCat': t[1], 'sIllust':t[2], 'sID':t[3], 'date':t[4], 'amount':t[5] } for t in zip(sName, sCat, sIllust, sID, date, amount)]
+  
+    #spectacles = Spectacles.objects.filter(pk__in=purchases.Spectacles)
+    #return render(request, 'polls/vorders.html', dict(purchases=purchases,sName=sName,sCat=sCat,sIllust=sIllust, i=i))
+    return render(request, 'polls/vorders.html', {'datalist':datalist})
+
 
 @login_required
 def purchase(request, digit,id): #digit correspond au montant a payer
-	form_class = forms.CheckoutForm
-	template_name = 'polls/purchase.html'
-	user = request.user
-	insert = p(Spectacles=id, purchaser=user.id, purchased_at=datetime.now(), tx=digit ) #on insere dans la BDD l'achat 
-	#digit = self.kwargs['digit']
-	braintree.Configuration.configure(braintree.Environment.Sandbox, #on se connecte
-		merchant_id= 'q6978cmvqxt69qp7',
-		public_key= 'p77z8hpmcj285xp9',
-		private_key='5a172ed06164422a23d4726b4e224e4a')
-	braintree_client_token = braintree.ClientToken.generate({}) #on genere un token
-	result = braintree.Transaction.sale({ #on effectue la transaction
-		"amount": digit,	
-		"payment_method_nonce":'nonce-from-the-client',
-		"order_id" : "Mapped to PayPal Invoice Number",
-		"options" : {
-			"paypal": {
-				"custom_field" : "PayPal custom field",
-				"description" : "Description for PayPal email receipt",
-				},
-			},
-	})
-	
-	if result.is_success:
-		print("yeeeeeeeeees")
-	else:
-		print(format(result.message))
-	
-	return render(request,"polls/purchase.html",{'braintree_client_token':braintree_client_token, 'digit':digit})
-		
+    form_class = forms.CheckoutForm
+    template_name = 'polls/purchase.html'
+    user = request.user
+    insert = p(Spectacles=id, purchaser=user.id, purchased_at=datetime.now(), tx=digit) #on insere dans la BDD l'achat 
+    insert.save();
+    #digit = self.kwargs['digit']
+    braintree.Configuration.configure(braintree.Environment.Sandbox, #on se connecte
+        merchant_id= 'q6978cmvqxt69qp7',
+        public_key= 'p77z8hpmcj285xp9',
+        private_key='5a172ed06164422a23d4726b4e224e4a')
+    braintree_client_token = braintree.ClientToken.generate({}) #on genere un token
+    result = braintree.Transaction.sale({ #on effectue la transaction
+        "amount": digit,    
+        "payment_method_nonce":'nonce-from-the-client',
+        "order_id" : "Mapped to PayPal Invoice Number",
+        "options" : {
+            "paypal": {
+                "custom_field" : "PayPal custom field",
+                "description" : "Description for PayPal email receipt",
+                },
+            },
+    })
+    
+    if result.is_success:
+        print("Success")
+    else:
+        print(format(result.message))
+    
+    return render(request,"polls/purchase.html",{'braintree_client_token':braintree_client_token, 'digit':digit})
+        
 def thanks(request):
-	return render(request, "polls/thanks.html")
+    return redirect('vorders/')
 
 
 class index(ListView):
@@ -187,22 +216,22 @@ class article(DetailView):
 
 
 class Search (ListView):
-	model = Spectacles
-	context_object_name = "article"
-	template_name= 'polls/articles.html'
-	def get_queryset(self):	
-		result = super(Search, self).get_queryset()
-		query = self.request.GET.get('q')
-		if query:
-			query_list = query.split()
-			result = result.filter(
-				reduce(operator.and_,
-					(Q(name__icontains=q) for q in query_list))|
-				reduce(operator.and_,
-					(Q(artistes__name__icontains=q) for q in query_list))
+    model = Spectacles
+    context_object_name = "article"
+    template_name= 'polls/articles.html'
+    def get_queryset(self): 
+        result = super(Search, self).get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            query_list = query.split()
+            result = result.filter(
+                reduce(operator.and_,
+                    (Q(name__icontains=q) for q in query_list))|
+                reduce(operator.and_,
+                    (Q(artistes__name__icontains=q) for q in query_list))
 
-			)
-		return result
+            )
+        return result
 
 
 def connexion(request):

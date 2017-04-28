@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>TicketsSales</title>
+<title>ticketsale</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
@@ -17,7 +17,7 @@
   <nav class="w3-sidebar w3-bar-block w3-collapse w3-top w3-light-grey" style="z-index:3;width:250px" id="mySidebar">
     <div class="w3-container w3-display-container w3-padding-16">
       <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
-      <h3 class="w3-wide"><a href="/"><b>TicketsSales</b></a></h3>
+      <h3 class="w3-wide"><a href="/"><b>ticketsale</b></a></h3>
     </div>
     <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
      
@@ -99,11 +99,12 @@
 
 <!-- Image header --  >
 
-
-
-  <div class="w3-container w3-text-grey" id="jeans">
-    <p>8 items</p>
+<!-- Sign In section -->
+  <div class="w3-container w3-black w3-padding-32" id="signin">
+    <h1>Pay by card</h1>
+    Your payment is processed by paypal. Your bank details are not recorded by our services.
   </div>
+
 
   <!-- Product grid -->
       <!--{% for spectacle in object_list %}
@@ -113,7 +114,7 @@
             <div class="w3-row ">
               <div class="w3-col l3 s6">
                 <div class="w3-container">
-                	<form id="checkout-form" action="/Thanks" method="post">{% csrf_token %}
+                  <form id="checkout-form" action="/Thanks" method="post">{% csrf_token %}
                     <div id="error-message"></div>
 
                     <label for="card-number">Card Number</label>
@@ -126,7 +127,7 @@
                     <div class="hosted-field" id="expiration-date"></div>
 
                     <input type="hidden" name="payment_method_nonce" value="paypal_account">
-                    <input type="submit" value="Pay {{digit}}$" disabled>
+                    <input type="submit" value="Pay {{digit}}€" disabled>
                   </form>
 
                   
